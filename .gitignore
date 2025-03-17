@@ -1,2 +1,6 @@
 .env
 *.log
+*.crt
+*.key
+*.pem
+backend/photo_app/uploads
