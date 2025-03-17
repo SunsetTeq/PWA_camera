@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 const CameraComponent = () => {
   const videoRef = useRef(null);
@@ -6,8 +6,7 @@ const CameraComponent = () => {
   const [message, setMessage] = useState('');
   const [facingMode, setFacingMode] = useState('environment'); // По умолчанию задняя камера
 
-  // Функция для получения видеопотока с указанным facingMode
-  const getStream = () => {
+  const getStream = useCallback(() => {
     // Если уже есть поток, останавливаем его
     if (videoRef.current && videoRef.current.srcObject) {
       const tracks = videoRef.current.srcObject.getTracks();
@@ -26,20 +25,19 @@ const CameraComponent = () => {
         console.error("Ошибка доступа к камере:", err);
         setMessage('Не удалось получить доступ к камере');
       });
-  };
+  }, [facingMode]);
 
-  // Запускаем getStream при монтировании компонента и при изменении facingMode
   useEffect(() => {
     getStream();
-
-    // Остановка треков при размонтировании компонента
+  
+    const videoNode = videoRef.current;
     return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const tracks = videoRef.current.srcObject.getTracks();
+      if (videoNode && videoNode.srcObject) {
+        const tracks = videoNode.srcObject.getTracks();
         tracks.forEach(track => track.stop());
       }
     };
-  }, [facingMode]);
+  }, [getStream]);
 
   // Функция для переключения между камерами
   const toggleCamera = () => {
@@ -59,11 +57,17 @@ const CameraComponent = () => {
           const formData = new FormData();
           formData.append('photo', blob, 'photo.png');
 
-          fetch('http://127.0.0.1:8000/api/upload-photo/', {
+          fetch('https://192.168.1.181:8000/api/upload-photo/', {
             method: 'POST',
             body: formData
           })
-            .then(response => response.json())
+            .then(response => {
+              console.log('Статус ответа:', response.status);
+              if (!response.ok) {
+                throw new Error('Ошибка сети');
+              }
+              return response.json();
+            })
             .then(data => {
               console.log("Ответ сервера:", data);
               setMessage('Фото отправлено!');
