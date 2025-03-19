@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-@csrf_exempt  # Для упрощения; на продакшене настройте CSRF корректно
+@csrf_exempt  
 def upload_photo(request):
     if request.method == 'POST' and request.FILES.get('photo'):
         photo = request.FILES['photo']
