@@ -4,3 +4,4 @@
 *.key
 *.pem
 backend/photo_app/uploads
+backend/db.sqlite3
