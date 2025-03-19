@@ -4,7 +4,7 @@ const CameraComponent = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [message, setMessage] = useState('');
-  const [facingMode, setFacingMode] = useState('environment'); // По умолчанию задняя камера
+  const [facingMode, setFacingMode] = useState('user'); // По умолчанию задняя камера
 
   // Функция для получения видеопотока с указанным facingMode
   const getStream = useCallback(() => {
@@ -101,12 +101,15 @@ const CameraComponent = () => {
 
   return (
     <div>
-      <h2>Камера</h2>
+      {/* <h2>Камера</h2> */}
       <video
         ref={videoRef}
-        style={{ transform: facingMode === 'user' ? 'scaleX(-1)' : 'none' }}
-        width="320"
-        height="240"
+        style={{
+          width: '95%',
+          height: '95%',
+          objectFit: 'cover', // Заполняет контейнер без искажений
+          transform: facingMode === 'user' ? 'scaleX(-1)' : 'none'
+        }}
         autoPlay
         muted
         playsInline
