@@ -4,7 +4,7 @@ const CameraComponent = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [message, setMessage] = useState('');
-  const [facingMode, setFacingMode] = useState('user'); // По умолчанию задняя камера
+  const [facingMode, setFacingMode] = useState('user'); // По умолчанию фронтальная камера
 
   // Функция для получения видеопотока с указанным facingMode
   const getStream = useCallback(() => {
@@ -45,12 +45,12 @@ const CameraComponent = () => {
     setFacingMode(prev => (prev === 'environment' ? 'user' : 'environment'));
   };
 
-  // Функция для захвата кадра с исходным разрешением и инвертированием, затем отправки фото на сервер
+  // Функция для захвата кадра с исходным разрешением и инвертированием, затем отправка фото на сервер
   const captureAndSendPhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (video && canvas) {
-      // Устанавливаем canvas согласно фактическим размерам видеопотока
+      // Установка canvas согласно фактическим размерам видеопотока
       const width = video.videoWidth;
       const height = video.videoHeight;
       canvas.width = width;
@@ -58,7 +58,7 @@ const CameraComponent = () => {
       
       const context = canvas.getContext('2d');
       
-      // инвертируем изображение с фронтальной камеры
+      // инвертирование изображения с фронтальной камеры
       if (facingMode === 'user') {
         context.save();
         context.translate(width, 0);
@@ -69,7 +69,7 @@ const CameraComponent = () => {
         context.drawImage(video, 0, 0, width, height);
       }
 
-      // Преобразуем canvas в Blob
+      // Преобразование canvas в Blob
       canvas.toBlob((blob) => {
         if (blob) {
           const formData = new FormData();
@@ -107,7 +107,7 @@ const CameraComponent = () => {
         style={{
           width: '95%',
           height: '95%',
-          objectFit: 'cover', // Заполняет контейнер без искажений
+          objectFit: 'cover',
           transform: facingMode === 'user' ? 'scaleX(-1)' : 'none'
         }}
         autoPlay
