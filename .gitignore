@@ -3,5 +3,6 @@
 *.crt
 *.key
 *.pem
+new_env/
 backend/photo_app/uploads
 backend/db.sqlite3

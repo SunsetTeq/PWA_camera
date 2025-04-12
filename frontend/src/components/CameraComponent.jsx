@@ -88,7 +88,7 @@ const CameraComponent = () => {
             })
             .then(data => {
               console.log("Ответ сервера:", data);
-              setMessage('Фото отправлено!');
+              setMessage(data.message);
             })
             .catch(error => {
               console.error("Ошибка при отправке фото:", error);
