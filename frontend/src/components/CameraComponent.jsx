@@ -8,19 +8,21 @@ import SetTheme from './ThemeButton';
 
 export default function CameraComponent() {
   const [message, setMessage] = useState('');
-  const [facingMode, setFacingMode] = useState('user');
+  const [facingMode, setFacingMode] = useState('environment');
   const videoRef = useRef(null);
 
   const toggleCamera = () => {
     setFacingMode(prev => (prev === 'environment' ? 'user' : 'environment'));
   };
 
+
+
   return (
     <Box>
       <VideoStream facingMode={facingMode} onStreamError={setMessage} ref={videoRef} />
-      <Box sx={{display:'flex', justifyContent:'space-between'}}>
+      <Box sx={{display:'flex', justifyContent:'space-around'}}>
         <SetTheme/>
-        <CaptureCanvas videoRef={videoRef} facingMode={facingMode} onPhotoCaptured={setMessage} />
+        <CaptureCanvas videoRef={videoRef} facingMode={facingMode} onPhotoCaptured={setMessage}/>
         <CameraControls  toggleCamera={toggleCamera} />
       </Box>
       <Box>

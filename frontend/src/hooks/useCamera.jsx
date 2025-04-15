@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 const useCamera = (facingMode, onError, ref) => {
-    // Используем переданный ref или создаем новый, если он не был передан
   
     useEffect(() => {
       const localVideo = ref.current;
