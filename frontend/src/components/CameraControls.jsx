@@ -1,12 +1,13 @@
+import IconButton from '@mui/material/IconButton';
+import CameraswitchOutlinedIcon from '@mui/icons-material/CameraswitchOutlined';
 import React from 'react';
 
-const CameraControls = ({ facingMode, toggleCamera, message }) => {
+const CameraControls = ({ toggleCamera}) => {
   return (
     <div>
-      <button onClick={toggleCamera}>
-        Переключить камеру (текущая: {facingMode === 'environment' ? 'задняя' : 'фронтальная'})
-      </button>
-      {message && <p>{message}</p>}
+      <IconButton onClick={toggleCamera} aria-label="switch" size="large">
+        <CameraswitchOutlinedIcon fontSize='large' color="primary"/>
+      </IconButton>
     </div>
   );
 };

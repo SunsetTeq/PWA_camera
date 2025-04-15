@@ -1,4 +1,6 @@
+import { IconButton } from '@mui/material';
 import React, { useRef } from 'react';
+import CameraOutlinedIcon from '@mui/icons-material/CameraOutlined';
 
 const CaptureCanvas = ({ videoRef, facingMode, onPhotoCaptured }) => {
   const canvasRef = useRef(null);
@@ -54,7 +56,9 @@ const CaptureCanvas = ({ videoRef, facingMode, onPhotoCaptured }) => {
   return (
     <>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
-      <button onClick={captureAndSendPhoto}>Сделать снимок и отправить</button>
+      <IconButton size='large' onClick={captureAndSendPhoto}>
+        <CameraOutlinedIcon fontSize='large' color="primary" />
+      </IconButton>
     </>
   );
 };

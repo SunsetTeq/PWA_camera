@@ -8,8 +8,8 @@ const VideoStream = forwardRef(({ facingMode, onStreamError }, ref) => {
     <video
       ref={videoRef}
       style={{
-        width: '95%',
-        height: '95%',
+        width: '100%',
+        height: '100%',
         objectFit: 'cover',
         transform: facingMode === 'user' ? 'scaleX(-1)' : 'none'
       }}
